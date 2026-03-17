@@ -1,10 +1,10 @@
-# 🏗️ Databricks Medallion Architecture — Online Retail Pipeline
+# Databricks Medallion Architecture — Online Retail Pipeline
 
 Pipeline de datos end-to-end implementado en **Databricks** usando la **arquitectura medallón** (Raw → Bronze → Silver → Gold) con **Delta Lake** y **Unity Catalog**.
 
 ---
 
-## 📐 Arquitectura
+## Arquitectura
 
 ```
 EC2 / Fuente Externa
@@ -32,7 +32,7 @@ EC2 / Fuente Externa
 
 ---
 
-## 📁 Estructura del Repositorio
+## Estructura del Repositorio
 
 ```
 databricks-medallion-pipeline/
@@ -52,7 +52,7 @@ databricks-medallion-pipeline/
 
 ---
 
-## 🔄 Descripción de cada capa
+## Descripción de cada capa
 
 ### `00_setup_environment` — Configuración del entorno
 Crea los **4 volúmenes** en Unity Catalog (`workspace.default`) que actúan como las capas del pipeline:
@@ -92,7 +92,7 @@ df_bronze = (
 df_bronze.write.format("delta").mode("append").save(bronze_path)
 ```
 
-> ✅ Permite auditoría completa: saber cuándo y desde dónde llegó cada registro.
+>  Permite auditoría completa: saber cuándo y desde dónde llegó cada registro.
 
 ---
 
@@ -112,7 +112,7 @@ df_silver = df_step5.withColumn(
 )
 ```
 
-> ✅ Datos confiables, tipados y listos para análisis.
+>  Datos confiables, tipados y listos para análisis.
 
 ---
 
@@ -137,11 +137,11 @@ df_gold_daily = (
 )
 ```
 
-> ✅ Listas para conectar con herramientas de BI como Power BI o Tableau.
+>  Listas para conectar con herramientas de BI como Power BI o Tableau.
 
 ---
 
-## 🛠️ Stack Tecnológico
+##  Stack Tecnológico
 
 | Herramienta | Uso |
 |---|---|
@@ -154,14 +154,14 @@ df_gold_daily = (
 
 ---
 
-## 📊 Dataset
+##  Dataset
 
 **Online Retail Dataset** — Transacciones de e-commerce de una tienda del Reino Unido (2010–2011).  
 Campos principales: `InvoiceNo`, `StockCode`, `Description`, `Quantity`, `InvoiceDate`, `UnitPrice`, `CustomerID`, `Country`.
 
 ---
 
-## 🚀 ¿Cómo ejecutar?
+##  ¿Cómo ejecutar?
 
 1. Clonar el repositorio y subir los notebooks a tu Workspace de Databricks
 2. Ejecutar en orden: `00` → `01` → `02` → `03` → `04`
@@ -170,7 +170,7 @@ Campos principales: `InvoiceNo`, `StockCode`, `Description`, `Quantity`, `Invoic
 
 ---
 
-## 👤 Autor
+##  Autor
 
-**[Tu Nombre]**  
-[LinkedIn](https://linkedin.com/in/tu-perfil) · [GitHub](https://github.com/tu-usuario)
+**[Duban Daniel Granados Mendez]**  
+[LinkedIn](www.linkedin.com/in/duban-daniel-granados-mendez-317077283) · 

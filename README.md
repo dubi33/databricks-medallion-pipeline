@@ -173,4 +173,4 @@ Campos principales: `InvoiceNo`, `StockCode`, `Description`, `Quantity`, `Invoic
 ##  Autor
 
 **[Duban Daniel Granados Mendez]**  
-[LinkedIn](www.linkedin.com/in/duban-daniel-granados-mendez-317077283) · 
+ 

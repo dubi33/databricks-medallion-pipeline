@@ -363,6 +363,6 @@ Campos: `InvoiceNo`, `StockCode`, `Description`, `Quantity`, `InvoiceDate`, `Uni
 
 ---
 
-## 👤 Autor
+## Autor
 
 **[Duban Daniel Granados Mendez]** 

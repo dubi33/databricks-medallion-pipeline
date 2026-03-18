@@ -1,10 +1,10 @@
-# 🏗️ Databricks Medallion Architecture — Online Retail Pipeline
+#  Databricks Medallion Architecture — Online Retail Pipeline
 
 Pipeline de datos end-to-end implementado en **Databricks** usando la **arquitectura medallón** (Raw → Bronze → Silver → Gold) con **Delta Lake**, **Unity Catalog** y **reglas de negocio dinámicas**.
 
 ---
 
-## 📐 Arquitectura
+##  Arquitectura
 
 ```
 EC2 / Fuente Externa
@@ -41,7 +41,7 @@ EC2 / Fuente Externa
 
 ---
 
-## 📁 Estructura del Repositorio
+##  Estructura del Repositorio
 
 ```
 databricks-medallion-pipeline/
@@ -63,7 +63,7 @@ databricks-medallion-pipeline/
 
 ---
 
-## 🔄 Descripción de cada notebook
+##  Descripción de cada notebook
 
 ### `00_setup_environment` — Configuración del entorno
 Crea los **4 volúmenes** en Unity Catalog que actúan como las capas del pipeline:
@@ -88,7 +88,7 @@ Lee el CSV desde `raw`, añade **metadatos de trazabilidad** y persiste en **Del
 - `ingestion_timestamp` → marca temporal de ingesta
 - `source_file` → ruta del archivo origen (via `_metadata.file_path`)
 
-> ✅ Permite auditoría completa: saber cuándo y desde dónde llegó cada registro.
+>  Permite auditoría completa: saber cuándo y desde dónde llegó cada registro.
 
 ---
 
@@ -100,11 +100,11 @@ Normaliza el campo `InvoiceDate` que venía en formato inconsistente (`M/D/YYYY 
 3. Reconstrucción con `concat_ws()`
 4. Conversión a `TimestampType` con `to_timestamp()`
 
-> ✅ Datos confiables, tipados y listos para análisis.
+>  Datos confiables, tipados y listos para análisis.
 
 ---
 
-### `05_config_rules` — Tabla de reglas de negocio ⭐
+### `05_config_rules` — Tabla de reglas de negocio 
 Crea la tabla `pipeline_config` en Unity Catalog y la llena con las reglas base. **Se ejecuta una sola vez**.
 
 ```python
@@ -141,7 +141,7 @@ spark.sql("""
 
 ---
 
-### `04_silver_to_gold` — SILVER → GOLD (dinámico) ⭐
+### `04_silver_to_gold` — SILVER → GOLD (dinámico) 
 En lugar de filtros hardcodeados, el notebook **lee las reglas activas** de `pipeline_config` y las aplica en runtime:
 
 ```python
@@ -156,11 +156,11 @@ df_clean = df_silver
 for rule in rules:
     if rule["operator"] == ">":
         df_clean = df_clean.filter(col(rule["column_name"]) > float(rule["value"]))
-        print(f"✅ {rule['rule_name']} → {rule['description']}")
+        print(f" {rule['rule_name']} → {rule['description']}")
 
     elif rule["operator"] == "is_not_null":
         df_clean = df_clean.filter(col(rule["column_name"]).isNotNull())
-        print(f"✅ {rule['rule_name']} → {rule['description']}")
+        print(f" {rule['rule_name']} → {rule['description']}")
 
 # 3. Aplicar cálculos dinámicamente
 for rule in rules:
@@ -170,7 +170,7 @@ for rule in rules:
             rule["column_name"],
             col(left.strip()) * col(right.strip())
         )
-        print(f"✅ {rule['rule_name']} → {rule['description']}")
+        print(f" {rule['rule_name']} → {rule['description']}")
 ```
 
 #### ¿Cómo detecta reglas nuevas o desactivadas?
@@ -199,7 +199,7 @@ Si se agrega una regla nueva o se desactiva una existente, el pipeline lo detect
 
 ---
 
-### `06_pipeline_runner` — Orquestador maestro ⭐
+### `06_pipeline_runner` — Orquestador maestro 
 Ejecuta todo el pipeline en orden desde un solo punto de entrada:
 
 ```python
@@ -210,11 +210,11 @@ run_notebook("04_silver_to_gold",   step=3)
 
 Programado con **Databricks Jobs** para ejecutarse automáticamente todos los días.
 
-> ✅ En producción nadie corre notebooks a mano. El Job se encarga de todo.
+>  En producción nadie corre notebooks a mano. El Job se encarga de todo.
 
 ---
 
-## ⚙️ Gestión de reglas de negocio
+##  Gestión de reglas de negocio
 
 ### Ver el estado actual de todas las reglas
 
@@ -308,7 +308,7 @@ spark.read \
 
 ---
 
-## ⏰ Automatización con Databricks Jobs
+##  Automatización con Databricks Jobs
 
 ```
 Databricks Jobs
@@ -323,16 +323,16 @@ Flujo automático diario:
 ```
 08:00 AM → Job trigger
               └── 06_pipeline_runner
-                      ├── ✅ 02_raw_to_bronze      (~45s)
-                      ├── ✅ 03_bronze_to_silver   (~30s)
-                      └── ✅ 04_silver_to_gold     (~28s)
+                      ├──  02_raw_to_bronze      (~45s)
+                      ├──  03_bronze_to_silver   (~30s)
+                      └──  04_silver_to_gold     (~28s)
                                └── lee pipeline_config
                                    y aplica reglas activas
 ```
 
 ---
 
-## 🛠️ Stack Tecnológico
+##  Stack Tecnológico
 
 | Herramienta | Uso |
 |---|---|
@@ -345,14 +345,14 @@ Flujo automático diario:
 
 ---
 
-## 📊 Dataset
+##  Dataset
 
 **Online Retail Dataset** — Transacciones de e-commerce de una tienda del Reino Unido (2010–2011).
 Campos: `InvoiceNo`, `StockCode`, `Description`, `Quantity`, `InvoiceDate`, `UnitPrice`, `CustomerID`, `Country`.
 
 ---
 
-## 🚀 ¿Cómo ejecutar?
+##  ¿Cómo ejecutar?
 
 1. Subir los notebooks al Workspace de Databricks
 2. Ejecutar `00_setup_environment` → crea los volúmenes
@@ -365,5 +365,4 @@ Campos: `InvoiceNo`, `StockCode`, `Description`, `Quantity`, `InvoiceDate`, `Uni
 
 ## 👤 Autor
 
-**[Tu Nombre]**
-[LinkedIn](https://linkedin.com/in/tu-perfil) · [GitHub](https://github.com/tu-usuario)
+**[Duban Daniel Granados Mendez]** 

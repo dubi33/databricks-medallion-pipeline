@@ -321,7 +321,7 @@ Databricks Jobs
 
 Flujo automático diario:
 ```
-08:00 AM → Job trigger
+02:30 AM → Job trigger
               └── 06_pipeline_runner
                       ├──  02_raw_to_bronze      (~45s)
                       ├──  03_bronze_to_silver   (~30s)
